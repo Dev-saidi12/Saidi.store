@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saidi STORE - Solusi Server & Top Up Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --secondary-dark: #d97706;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --gray: #64748b;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-secondary: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            --gradient-dark: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(15px);
+            color: white;
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            border: 2px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo:hover .logo-img {
+            transform: rotate(5deg) scale(1.1);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .logo-text span:first-child {
+            color: white;
+            font-size: 2rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span:last-child {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-top: 3px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            color: var(--secondary);
+        }
+
+        nav a.active:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-secondary);
+            border-radius: 3px;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: rgba(99, 102, 241, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .mobile-menu:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30, 41, 59, 0.9), rgba(30, 41, 59, 0.95)), 
+                        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.2) 0%, transparent 50%);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 7rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="none"><path d="M0,0 Q500,150 1000,0 L1000,200 L0,200 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1:after {
+            content: '✨';
+            position: absolute;
+            top: -20px;
+            left: -30px;
+            font-size: 2rem;
+            animation: sparkle 2s infinite;
+        }
+
+        .hero h1:before {
+            content: '✨';
+            position: absolute;
+            bottom: -20px;
+            right: -30px;
+            font-size: 2rem;
+            animation: sparkle 2s infinite 0.5s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .hero h1 .highlight:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: var(--gradient-secondary);
+            border-radius: 3px;
+        }
+
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 20px;
+        }
+
+        .hero-logo-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 25px;
+            object-fit: cover;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border: 4px solid var(--primary);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .hero-text-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .hero-text-logo h2 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-text-logo .tagline {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 2rem auto 2.5rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.8s;
+        }
+
+        .cta-button:hover:before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.5);
+        }
+
+        .cta-button.secondary {
+            background: var(--gradient-secondary);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Game Selection Section */
+        .game-selection {
+            padding: 5rem 0 3rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3.2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 6px;
+            background: var(--gradient-secondary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 1rem auto 0;
+            font-weight: 300;
+        }
+
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .game-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 280px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+            transition: var(--transition);
+        }
+
+        .game-button:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .game-button.active {
+            border-color: var(--secondary);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .game-button.active:before {
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .game-button.active .game-icon {
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-button.ml .game-icon {
+            background: linear-gradient(135deg, #ff4655 0%, #ff6b6b 100%);
+            color: white;
+        }
+
+        .game-button.ff .game-icon {
+            background: linear-gradient(135deg, #ff9f1c 0%, #ffb347 100%);
+            color: white;
+        }
+
+        .game-button.pubg .game-icon {
+            background: linear-gradient(135deg, #ff9f1c 0%, #ffcc00 100%);
+            color: white;
+        }
+
+        .game-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .game-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Diamond Display Section */
+        .diamond-display {
+            padding: 2rem 0 6rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 600px;
+            position: relative;
+        }
+
+        .diamond-content {
+            display: none;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .diamond-content.active {
+            display: block;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dark);
+            opacity: 0.05;
+        }
+
+        .selected-game-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .selected-game-icon.ml { color: #ff4655; }
+        .selected-game-icon.ff { color: #ff9f1c; }
+        .selected-game-icon.pubg { color: #ff9f1c; }
+
+        .selected-game-name {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .selected-game-desc {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .diamonds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .diamond-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 3px solid #e2e8f0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .diamond-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .diamond-card.popular {
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+        }
+
+        .diamond-card.popular:before {
+            content: '🔥';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            animation: fire 1s infinite alternate;
+        }
+
+        @keyframes fire {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            left: -30px;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 8px 40px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transform: rotate(-45deg);
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .diamond-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .diamond-icon {
+            font-size: 2rem;
+        }
+
+        .diamond-card.ml .diamond-icon { color: #ff4655; }
+        .diamond-card.ff .diamond-icon { color: #ff9f1c; }
+        .diamond-card.pubg .diamond-icon { color: #ff9f1c; }
+
+        .diamond-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .diamond-price:before {
+            content: '💵';
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+
+        .diamond-price .old-price {
+            font-size: 1.3rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .diamond-price .new-price {
+            color: var(--danger);
+            text-shadow: 0 2px 5px rgba(239, 68, 68, 0.2);
+        }
+
+        .diamond-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .diamond-features li {
+            padding: 10px 0;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .diamond-features li:last-child {
+            border-bottom: none;
+        }
+
+        .diamond-features li i {
+            color: var(--success);
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .diamond-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diamond-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .diamond-button:hover:before {
+            left: 100%;
+        }
+
+        .diamond-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 6px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .service-icon {
+            width: 90px;
+            height: 90px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotateY(180deg) scale(1.1);
+        }
+
+        .service-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #e2e8f0;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 25px;
+            right: -35px;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 10px 45px;
+            font-weight: 900;
+            font-size: 1rem;
+            transform: rotate(45deg);
+            box-shadow: 0 5px 25px rgba(245, 158, 11, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .pricing-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid #f1f5f9;
+        }
+
+        .pricing-title {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .price:before {
+            content: '💵';
+            position: absolute;
+            left: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .price .old-price {
+            font-size: 1.5rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-right: 15px;
+            font-weight: 500;
+        }
+
+        .price .new-price {
+            color: var(--danger);
+            text-shadow: 0 2px 5px rgba(239, 68, 68, 0.2);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 14px 0;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05rem;
+        }
+
+        .pricing-features li i {
+            color: var(--success);
+            font-size: 1.1rem;
+            min-width: 25px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            background: var(--gradient-dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+        }
+
+        .contact .section-title h2 {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .contact .section-title p {
+            color: #cbd5e1;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-secondary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .contact-item h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 20px 45px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.3rem;
+            transition: var(--transition);
+            margin-top: 3rem;
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+            transition: var(--transition);
+        }
+
+        .footer-logo:hover .footer-logo-img {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .footer-logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .footer-logo-text span:first-child {
+            color: white;
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .footer-logo-text span:last-child {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-top: 3px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-secondary);
+            bottom: 0;
+            left: 0;
+            border-radius: 4px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 300;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(10px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            border: 3px solid white;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-10px) rotate(360deg);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-15px);
+            }
+            
+            .game-buttons {
+                gap: 1.5rem;
+            }
+            
+            .game-button {
+                width: 250px;
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.8rem;
+            }
+            
+            .game-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-button {
+                width: 100%;
+                max-width: 400px;
+                flex-direction: row;
+                text-align: left;
+                justify-content: flex-start;
+            }
+            
+            .game-button .game-icon {
+                margin-bottom: 0;
+                margin-right: 20px;
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+            
+            .game-name {
+                font-size: 1.6rem;
+            }
+            
+            .diamonds-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text-logo {
+                text-align: center;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                background: rgba(30, 41, 59, 0.98);
+                backdrop-filter: blur(20px);
+                transition: var(--transition);
+                padding: 2rem;
+                z-index: 999;
+                height: calc(100vh - 80px);
+                overflow-y: auto;
+                border-top: 3px solid var(--primary);
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            nav a {
+                font-size: 1.3rem;
+                padding: 15px 0;
+                display: block;
+                justify-content: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            nav a.active:after {
+                display: none;
+            }
+
+            .hero {
+                padding: 5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero h1:after, .hero h1:before {
+                display: none;
+            }
+            
+            .hero-logo-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .hero-text-logo h2 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-text-logo .tagline {
+                font-size: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .cta-button {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .diamonds-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-button {
+                padding: 1.5rem;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-logo-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .hero-text-logo h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-text-logo .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .game-button {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .game-button .game-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .selected-game-name {
+                font-size: 2rem;
+            }
+            
+            .contact-button {
+                width: 100%;
+                text-align: center;
+                padding: 18px;
+            }
+            
+            .diamond-card {
+                padding: 1.5rem;
+            }
+            
+            .diamond-amount {
+                font-size: 1.8rem;
+            }
+            
+            .diamond-price {
+                font-size: 2rem;
+            }
+            
+            .logo-img {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .logo-text span:first-child {
+                font-size: 1.6rem;
+            }
+            
+            .logo-text span:last-child {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-xl);
+            z-index: 10000;
+            transform: translateX(150%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">Pilihan game berhasil diubah!</span>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#home" class="logo">
+                <img src="https://i.postimg.cc/13NVNQvD/file-00000000501471fabb17fd56cd786c7c.png" alt="Saidi STORE Logo" class="logo-img">
+                <div class="logo-text">
+                    <span>Saidi</span>
+                    <span>STORE</span>
+                </div>
+            </a>
+            
+            <div class="mobile-menu" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#games"><i class="fas fa-gamepad"></i> Top Up Game</a></li>
+                    <li><a href="#layanan"><i class="fas fa-cube"></i> Layanan</a></li>
+                    <li><a href="#harga"><i class="fas fa-server"></i> Hosting</a></li>
+                    <li><a href="#kenapa"><i class="fas fa-star"></i> Kenapa Kami</a></li>
+                    <li><a href="#kontak"><i class="fas fa-phone"></i> Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-logo">
+                <img src="https://i.postimg.cc/13NVNQvD/file-00000000501471fabb17fd56cd786c7c.png" alt="Saidi STORE Logo" class="hero-logo-img">
+                <div class="hero-text-logo">
+                    <h2>Saidi STORE</h2>
+                    <div class="tagline">Solusi Server & Top Up Game</div>
+                </div>
+            </div>
+            
+            <h1>✨ WELCOME TO <span class="highlight">Saidi STORE</span> ✨</h1>
+            <p><strong>Solusi Bijak untuk Server Impian & Top Up Game Termurah!</strong> 🚀<br>
+            Halo Sobat Mimin! 👋 Lagi bingung cari jasa pembuatan server, hosting, atau top up game yang anti-ribet dan terpercaya? Saidi STORE siap bantu wujudkan komunitas impianmu jadi kenyataan! 🛠️</p>
+            
+            <div class="hero-buttons">
+                <a href="#games" class="cta-button secondary">
+                    <i class="fas fa-gamepad"></i> Top Up Game Sekarang
+                </a>
+                <a href="#harga" class="cta-button">
+                    <i class="fas fa-server"></i> Lihat Paket Hosting
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Selection Section -->
+    <section class="game-selection" id="games">
+        <div class="container">
+            <div class="section-title">
+                <h2>🎮 PILIH GAME FAVORITMU</h2>
+                <p>Klik game yang ingin kamu top up untuk melihat pilihan diamond yang tersedia</p>
+            </div>
+            
+            <div class="game-buttons">
+                <div class="game-button ml active" data-game="ml">
+                    <div class="game-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div>
+                        <h3 class="game-name">Mobile Legends</h3>
+                        <p class="game-desc">Klik untuk melihat pilihan diamond Mobile Legends</p>
+                    </div>
+                </div>
+                
+                <div class="game-button ff" data-game="ff">
+                    <div class="game-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div>
+                        <h3 class="game-name">Free Fire</h3>
+                        <p class="game-desc">Klik untuk melihat pilihan diamond Free Fire</p>
+                    </div>
+                </div>
+                
+                <div class="game-button pubg" data-game="pubg">
+                    <div class="game-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <div>
+                        <h3 class="game-name">PUBG Mobile</h3>
+                        <p class="game-desc">Klik untuk melihat pilihan UC PUBG Mobile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diamond Display Section -->
+    <section class="diamond-display">
+        <div class="container">
+            <!-- Mobile Legends Diamonds -->
+            <div class="diamond-content active" id="ml-diamonds">
+                <div class="game-header">
+                    <div class="selected-game-icon ml">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 class="selected-game-name">Mobile Legends</h3>
+                    <p class="selected-game-desc">Pilih paket diamond yang sesuai dengan kebutuhanmu. Proses cepat hanya dalam hitungan menit!</p>
+                </div>
+                
+                <div class="diamonds-grid">
+                    <div class="diamond-card ml">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 86 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 25.000</span>
+                            <span class="new-price">Rp 22.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 3 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Mobile Legends" data-amount="86" data-price="22000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ml popular">
+                        <div class="popular-badge">POPULER</div>
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 172 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 50.000</span>
+                            <span class="new-price">Rp 44.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 8 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Mobile Legends" data-amount="172" data-price="44000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ml">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 257 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 75.000</span>
+                            <span class="new-price">Rp 65.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 12 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Mobile Legends" data-amount="257" data-price="65000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ml">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 344 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 100.000</span>
+                            <span class="new-price">Rp 88.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 17 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Mobile Legends" data-amount="344" data-price="88000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ml">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 514 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 150.000</span>
+                            <span class="new-price">Rp 130.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 26 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Mobile Legends" data-amount="514" data-price="130000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ml popular">
+                        <div class="popular-badge">HEMAT</div>
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 706 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 200.000</span>
+                            <span class="new-price">Rp 175.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 36 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Mobile Legends" data-amount="706" data-price="175000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Free Fire Diamonds -->
+            <div class="diamond-content" id="ff-diamonds">
+                <div class="game-header">
+                    <div class="selected-game-icon ff">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="selected-game-name">Free Fire</h3>
+                    <p class="selected-game-desc">Pilih paket diamond Free Fire yang sesuai dengan kebutuhanmu. Proses cepat dan aman!</p>
+                </div>
+                
+                <div class="diamonds-grid">
+                    <div class="diamond-card ff">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 70 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 10.000</span>
+                            <span class="new-price">Rp 9.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-3 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 5 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Free Fire" data-amount="70" data-price="9000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ff popular">
+                        <div class="popular-badge">POPULER</div>
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 140 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 20.000</span>
+                            <span class="new-price">Rp 18.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-3 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 10 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Free Fire" data-amount="140" data-price="18000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ff">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 210 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 30.000</span>
+                            <span class="new-price">Rp 27.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-3 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 15 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Free Fire" data-amount="210" data-price="27000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ff">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 355 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 50.000</span>
+                            <span class="new-price">Rp 45.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-3 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 25 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Free Fire" data-amount="355" data-price="45000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ff">
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 720 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 100.000</span>
+                            <span class="new-price">Rp 90.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-3 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 50 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Free Fire" data-amount="720" data-price="90000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card ff popular">
+                        <div class="popular-badge">HEMAT</div>
+                        <div class="diamond-amount">
+                            <i class="fas fa-gem diamond-icon"></i> 1450 Diamond
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 200.000</span>
+                            <span class="new-price">Rp 180.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-3 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 100 Diamond</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="Free Fire" data-amount="1450" data-price="180000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PUBG Mobile Diamonds -->
+            <div class="diamond-content" id="pubg-diamonds">
+                <div class="game-header">
+                    <div class="selected-game-icon pubg">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h3 class="selected-game-name">PUBG Mobile</h3>
+                    <p class="selected-game-desc">Pilih paket UC PUBG Mobile yang sesuai dengan kebutuhanmu. Proses cepat dan terjamin!</p>
+                </div>
+                
+                <div class="diamonds-grid">
+                    <div class="diamond-card pubg">
+                        <div class="diamond-amount">
+                            <i class="fas fa-coins diamond-icon"></i> 60 UC
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 10.000</span>
+                            <span class="new-price">Rp 9.500</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 5 UC</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="PUBG Mobile" data-amount="60" data-price="9500">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card pubg popular">
+                        <div class="popular-badge">POPULER</div>
+                        <div class="diamond-amount">
+                            <i class="fas fa-coins diamond-icon"></i> 325 UC
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 50.000</span>
+                            <span class="new-price">Rp 47.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 25 UC</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="PUBG Mobile" data-amount="325" data-price="47000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card pubg">
+                        <div class="diamond-amount">
+                            <i class="fas fa-coins diamond-icon"></i> 660 UC
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 100.000</span>
+                            <span class="new-price">Rp 94.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 50 UC</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="PUBG Mobile" data-amount="660" data-price="94000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card pubg">
+                        <div class="diamond-amount">
+                            <i class="fas fa-coins diamond-icon"></i> 1800 UC
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 250.000</span>
+                            <span class="new-price">Rp 235.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 150 UC</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="PUBG Mobile" data-amount="1800" data-price="235000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card pubg">
+                        <div class="diamond-amount">
+                            <i class="fas fa-coins diamond-icon"></i> 3850 UC
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 500.000</span>
+                            <span class="new-price">Rp 470.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 350 UC</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="PUBG Mobile" data-amount="3850" data-price="470000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="diamond-card pubg popular">
+                        <div class="popular-badge">HEMAT</div>
+                        <div class="diamond-amount">
+                            <i class="fas fa-coins diamond-icon"></i> 8100 UC
+                        </div>
+                        <div class="diamond-price">
+                            <span class="old-price">Rp 1.000.000</span>
+                            <span class="new-price">Rp 940.000</span>
+                        </div>
+                        <ul class="diamond-features">
+                            <li><i class="fas fa-check"></i> Proses 1-5 menit</li>
+                            <li><i class="fas fa-check"></i> Bonus 900 UC</li>
+                            <li><i class="fas fa-check"></i> Langsung masuk ke akun</li>
+                            <li><i class="fas fa-check"></i> Garansi 100% aman</li>
+                        </ul>
+                        <button class="diamond-button" data-game="PUBG Mobile" data-amount="8100" data-price="940000">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="layanan">
+        <div class="container">
+            <div class="section-title">
+                <h2>💎 LAYANAN UNGGULAN KAMI</h2>
+                <p>Solusi lengkap untuk kebutuhan server, hosting, dan top up game Anda</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Expert Developer</h3>
+                    <p>Penanganan oleh tenaga berpengalaman dengan pengalaman luas di bidang server dan hosting.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Top Up Game</h3>
+                    <p>Top up diamond Free Fire, Mobile Legends, PUBG Mobile dengan proses cepat dan harga murah.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>High-Quality Hosting</h3>
+                    <p>Server stabil & minim lag dengan uptime 99.9% dan kecepatan optimal untuk pengalaman terbaik.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Build Server</h3>
+                    <p>Terima beres, dari nol sampai ready to play. Kami handle semua proses setup untuk Anda.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Proses Instan</h3>
+                    <p>Top up game dikirim dalam hitungan menit setelah pembayaran dikonfirmasi.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support 24/7</h3>
+                    <p>Tim support siap membantu Anda kapan saja, baik untuk hosting maupun top up game.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Hosting) -->
+    <section class="pricing" id="harga">
+        <div class="container">
+            <div class="section-title">
+                <h2>💰 PAKET HARGA HOSTING</h2>
+                <p>Pilih paket yang sesuai dengan kebutuhan server Anda</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">30 SLOT PLAYER</h3>
+                        <div class="price">
+                            <span class="old-price">~10.000~</span>
+                            <span class="new-price">5.000 Rp</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 30 Slot Player</li>
+                        <li><i class="fas fa-check"></i> Uptime 99.9%</li>
+                        <li><i class="fas fa-check"></i> Support 24/7</li>
+                        <li><i class="fas fa-check"></i> Backup Harian</li>
+                    </ul>
+                    <a href="#kontak" class="cta-button">Pesan Sekarang</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="featured-badge">POPULER</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">50 SLOT PLAYER</h3>
+                        <div class="price">
+                            <span class="old-price">~10.000~</span>
+                            <span class="new-price">15.000 Rp</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 50 Slot Player</li>
+                        <li><i class="fas fa-check"></i> Uptime 99.9%</li>
+                        <li><i class="fas fa-check"></i> Support 24/7</li>
+                        <li><i class="fas fa-check"></i> Backup Harian</li>
+                        <li><i class="fas fa-check"></i> Domain Gratis</li>
+                    </ul>
+                    <a href="#kontak" class="cta-button secondary">Pesan Sekarang</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">100 SLOT PLAYER</h3>
+                        <div class="price">
+                            <span class="old-price">~20.000~</span>
+                            <span class="new-price">40.000 Rp</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 100 Slot Player</li>
+                        <li><i class="fas fa-check"></i> Uptime 99.9%</li>
+                        <li><i class="fas fa-check"></i> Support 24/7</li>
+                        <li><i class="fas fa-check"></i> Backup Harian</li>
+                        <li><i class="fas fa-check"></i> Domain Gratis</li>
+                        <li><i class="fas fa-check"></i> SSL Certificate</li>
+                    </ul>
+                    <a href="#kontak" class="cta-button">Pesan Sekarang</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">200 SLOT PLAYER</h3>
+                        <div class="price">
+                            <span class="old-price">~70.000~</span>
+                            <span class="new-price">30.000 Rp</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 200 Slot Player</li>
+                        <li><i class="fas fa-check"></i> Uptime 99.9%</li>
+                        <li><i class="fas fa-check"></i> Support 24/7</li>
+                        <li><i class="fas fa-check"></i> Backup Harian</li>
+                        <li><i class="fas fa-check"></i> Domain Gratis</li>
+                        <li><i class="fas fa-check"></i> SSL Certificate</li>
+                        <li><i class="fas fa-check"></i> DDoS Protection</li>
+                    </ul>
+                    <a href="#kontak" class="cta-button">Pesan Sekarang</a>
+                </div>
+            </div>
+            
+            <div class="special-package" style="text-align: center; margin-top: 4rem;">
+                <h3 style="color: var(--primary); font-size: 2.2rem; margin-bottom: 2rem;">🔥 PAKET SPESIAL</h3>
+                <div class="pricing-card featured" style="max-width: 700px; margin: 0 auto;">
+                    <div class="featured-badge">SPESIAL</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Hosting Bot Support</h3>
+                        <p style="margin-bottom: 1rem; color: var(--gray); font-size: 1.1rem;">All Menu Bot, UCP, Whatsapp, Whitelist</p>
+                        <div class="price">
+                            <span class="old-price">~40.000~</span>
+                            <span class="new-price">50.000 Rp</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Support All Menu Bot</li>
+                        <li><i class="fas fa-check"></i> UCP (User Control Panel)</li>
+                        <li><i class="fas fa-check"></i> Integrasi WhatsApp</li>
+                        <li><i class="fas fa-check"></i> Whitelist System</li>
+                        <li><i class="fas fa-check"></i> 24/7 Monitoring</li>
+                        <li><i class="fas fa-check"></i> Auto Backup</li>
+                    </ul>
+                    <a href="#kontak" class="cta-button secondary" style="font-size: 1.1rem; padding: 16px 40px;">
+                        Pesan Paket Spesial
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="kontak">
+        <div class="container">
+            <div class="section-title">
+                <h2>📞 HUBUNGI KAMI</h2>
+                <p>Siap melayani kebutuhan server, hosting, dan top up game Anda. Jangan ragu untuk menghubungi kami!</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp</h3>
+                    <p>+62 812-3456-7890</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>support@saidistore.com</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <h3>Telegram</h3>
+                    <p>@saidistore</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Jam Operasional</h3>
+                    <p>24/7 Setiap Hari</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="https://wa.me/6281234567890?text=Halo%20Saidi%20STORE,%20saya%20ingin%20bertanya%20tentang%20layanan%20hosting%20atau%20top%20up%20game" class="contact-button">
+                    <i class="fab fa-whatsapp"></i> Chat via WhatsApp Sekarang
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="#home" class="footer-logo">
+                        <img src="https://i.postimg.cc/13NVNQvD/file-00000000501471fabb17fd56cd786c7c.png" alt="Saidi STORE Logo" class="footer-logo-img">
+                        <div class="footer-logo-text">
+                            <span>Saidi</span>
+                            <span>STORE</span>
+                        </div>
+                    </a>
+                    <p style="color: #cbd5e1; margin-bottom: 1.5rem; max-width: 300px; line-height: 1.6;">
+                        Solusi Bijak untuk Server Impian & Top Up Game Terbaik! 🚀 Melayani dengan cepat, aman, dan terpercaya.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3>Menu Utama</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#games"><i class="fas fa-chevron-right"></i> Top Up Game</a></li>
+                        <li><a href="#layanan"><i class="fas fa-chevron-right"></i> Layanan</a></li>
+                        <li><a href="#harga"><i class="fas fa-chevron-right"></i> Hosting</a></li>
+                        <li><a href="#kontak"><i class="fas fa-chevron-right"></i> Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Game Populer</h3>
+                    <ul class="footer-links">
+                        <li><a href="#games" class="ml-link"><i class="fas fa-chevron-right"></i> Mobile Legends</a></li>
+                        <li><a href="#games" class="ff-link"><i class="fas fa-chevron-right"></i> Free Fire</a></li>
+                        <li><a href="#games" class="pubg-link"><i class="fas fa-chevron-right"></i> PUBG Mobile</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Kontak Kami</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://wa.me/6281234567890"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+                        <li><a href="mailto:support@saidistore.com"><i class="fas fa-envelope"></i> Email</a></li>
+                        <li><a href="https://t.me/saidistore"><i class="fab fa-telegram"></i> Telegram</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Lokasi</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© <span id="currentYear">2023</span> Saidi STORE. All rights reserved. | Dibuat dengan ❤️ untuk komunitas game dan server Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Order Modal -->
+    <div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10001; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 25px; padding: 3rem; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.4); border: 3px solid var(--secondary);">
+            <button id="closeModal" style="position: absolute; top: 25px; right: 25px; background: none; border: none; font-size: 1.8rem; color: var(--danger); cursor: pointer; transition: var(--transition); z-index: 2;">
+                <i class="fas fa-times-circle"></i>
+            </button>
+            
+            <h3 id="modalTitle" style="margin-bottom: 1.5rem; font-size: 2rem; color: var(--dark); text-align: center; position: relative; padding-bottom: 15px;">
+                <i class="fas fa-shopping-cart" style="color: var(--primary); margin-right: 10px;"></i>
+                Pesan Top Up Game
+                <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 4px; background: var(--gradient-secondary); border-radius: 4px;"></div>
+            </h3>
+            
+            <form id="orderForm">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark); font-size: 1.1rem;">
+                        <i class="fas fa-gamepad" style="color: var(--primary); margin-right: 8px;"></i>
+                        Game:
+                    </label>
+                    <input type="text" id="orderGame" readonly style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 1.1rem; color: var(--dark); font-weight: 600;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark); font-size: 1.1rem;">
+                        <i class="fas fa-gem" style="color: var(--warning); margin-right: 8px;"></i>
+                        Jumlah Diamond/UC:
+                    </label>
+                    <input type="text" id="orderAmount" readonly style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 1.1rem; color: var(--dark); font-weight: 600;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark); font-size: 1.1rem;">
+                        <i class="fas fa-money-bill-wave" style="color: var(--success); margin-right: 8px;"></i>
+                        Harga:
+                    </label>
+                    <input type="text" id="orderPrice" readonly style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 1.1rem; color: var(--dark); font-weight: 600;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark); font-size: 1.1rem;">
+                        <i class="fas fa-id-card" style="color: var(--info); margin-right: 8px;"></i>
+                        ID Game/User ID:
+                    </label>
+                    <input type="text" id="userId" required style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1.1rem; transition: var(--transition);" placeholder="Masukkan ID Game/User ID Anda">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark); font-size: 1.1rem;">
+                        <i class="fas fa-user" style="color: var(--primary); margin-right: 8px;"></i>
+                        Nickname:
+                    </label>
+                    <input type="text" id="nickname" required style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1.1rem; transition: var(--transition);" placeholder="Masukkan nickname game Anda">
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark); font-size: 1.1rem;">
+                        <i class="fas fa-server" style="color: var(--gray); margin-right: 8px;"></i>
+                        Server (jika ada):
+                    </label>
+                    <input type="text" id="server" style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1.1rem; transition: var(--transition);" placeholder="Contoh: Server 12345">
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 2rem;">
+                    <button type="button" id="cancelOrder" class="cta-button" style="background: #64748b; flex: 1; padding: 18px; border-radius: 12px; font-size: 1.1rem; font-weight: 700;">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="cta-button" style="flex: 2; padding: 18px; border-radius: 12px; font-size: 1.1rem; font-weight: 700;">
+                        <i class="fas fa-paper-plane"></i> Pesan Sekarang
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // Update active nav link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Game button functionality
+        const gameButtons = document.querySelectorAll('.game-button');
+        const diamondContents = document.querySelectorAll('.diamond-content');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        gameButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const game = this.getAttribute('data-game');
+                
+                // Remove active class from all buttons
+                gameButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Hide all diamond contents
+                diamondContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected diamond content
+                const selectedContent = document.getElementById(`${game}-diamonds`);
+                if (selectedContent) {
+                    selectedContent.classList.add('active');
+                    
+                    // Add animation
+                    selectedContent.style.animation = 'none';
+                    setTimeout(() => {
+                        selectedContent.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }, 10);
+                }
+                
+                // Show notification
+                const gameNames = {
+                    'ml': 'Mobile Legends',
+                    'ff': 'Free Fire',
+                    'pubg': 'PUBG Mobile'
+                };
+                notificationText.textContent = `Menampilkan diamond untuk ${gameNames[game]}`;
+                notification.classList.add('show');
+                
+                // Auto hide notification after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+                
+                // Scroll to diamond section
+                setTimeout(() => {
+                    document.querySelector('.diamond-display').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 500);
+            });
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Top up button functionality
+        const topupButtons = document.querySelectorAll('.diamond-button');
+        const orderModal = document.getElementById('orderModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelOrderBtn = document.getElementById('cancelOrder');
+        const orderForm = document.getElementById('orderForm');
+        
+        topupButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const game = button.getAttribute('data-game');
+                const amount = button.getAttribute('data-amount');
+                const price = button.getAttribute('data-price');
+                
+                // Set modal content
+                document.getElementById('modalTitle').innerHTML = `
+                    <i class="fas fa-shopping-cart" style="color: var(--primary); margin-right: 10px;"></i>
+                    Pesan Top Up ${game}
+                    <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 4px; background: var(--gradient-secondary); border-radius: 4px;"></div>
+                `;
+                document.getElementById('orderGame').value = game;
+                document.getElementById('orderAmount').value = amount + (game === 'PUBG Mobile' ? ' UC' : ' Diamond');
+                document.getElementById('orderPrice').value = `Rp ${parseInt(price).toLocaleString('id-ID')}`;
+                
+                // Show modal
+                orderModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Add animation
+                orderModal.style.opacity = '0';
+                setTimeout(() => {
+                    orderModal.style.opacity = '1';
+                    orderModal.style.transition = 'opacity 0.3s ease';
+                }, 10);
+            });
+        });
+        
+        // Close modal functions
+        const closeModalFunc = () => {
+            orderModal.style.opacity = '0';
+            setTimeout(() => {
+                orderModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                orderForm.reset();
+            }, 300);
+        };
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        cancelOrderBtn.addEventListener('click', closeModalFunc);
+        
+        // Close modal when clicking outside
+        orderModal.addEventListener('click', (e) => {
+            if(e.target === orderModal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Form submission
+        orderForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const game = document.getElementById('orderGame').value;
+            const amount = document.getElementById('orderAmount').value;
+            const price = document.getElementById('orderPrice').value;
+            const userId = document.getElementById('userId').value;
+            const nickname = document.getElementById('nickname').value;
+            const server = document.getElementById('server').value;
+            
+            // Create WhatsApp message
+            let message = `Halo Saidi STORE! Saya ingin memesan top up game:\n\n`;
+            message += `🎮 *Game:* ${game}\n`;
+            message += `💰 *Jumlah:* ${amount}\n`;
+            message += `💵 *Harga:* ${price}\n`;
+            message += `🆔 *ID Game:* ${userId}\n`;
+            message += `👤 *Nickname:* ${nickname}\n`;
+            if(server) message += `🌐 *Server:* ${server}\n`;
+            message += `\nSaya sudah siap untuk melakukan pembayaran. Terima kasih!`;
+            
+            // Encode message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/6281234567890?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Close modal and reset form
+            closeModalFunc();
+            
+            // Show success notification
+            notificationText.textContent = `Berhasil! Anda akan diarahkan ke WhatsApp untuk melanjutkan pesanan ${game}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        });
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Footer game links
+        document.querySelectorAll('.ml-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.game-button.ml').click();
+            });
+        });
+        
+        document.querySelectorAll('.ff-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.game-button.ff').click();
+            });
+        });
+        
+        document.querySelectorAll('.pubg-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.game-button.pubg').click();
+            });
+        });
+
+        // Add hover effect to game buttons
+        gameButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateY(-10px) scale(1.03)';
+                }
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateY(0) scale(1)';
+                } else {
+                    this.style.transform = 'translateY(-10px)';
+                }
+            });
+        });
+
+        // Initialize with Mobile Legends selected
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add active class to first nav link
+            navLinks[0].classList.add('active');
+            
+            // Show Mobile Legends diamonds by default
+            document.querySelector('.game-button.ml').classList.add('active');
+            document.getElementById('ml-diamonds').classList.add('active');
+            
+            // Animate hero content
+            setTimeout(() => {
+                document.querySelector('.hero-content').style.opacity = '1';
+                document.querySelector('.hero-content').style.transform = 'translateY(0)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
